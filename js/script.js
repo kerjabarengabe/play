@@ -158,7 +158,6 @@ function resetGuesses() {
     card.classList.remove('selected');
   });
 }
-
 // ================= CLICK LOGIC =================
 grid.addEventListener('click', event => {
   const clicked = event.target;
@@ -208,6 +207,41 @@ document.addEventListener("keydown", (e) => {
     window.chrome.webview.postMessage("exit");
   }
 });
+
+
+
+function scaleGame() {
+  const wrapper = document.getElementById("game-wrapper");
+
+  const baseH = 1440;
+  const baseW = 900;
+
+  const scaleX = window.innerWidth / baseW;
+  const scaleY = window.innerHeight / baseH;
+
+  const scale = Math.min(scaleX, scaleY);
+
+  wrapper.style.transform =
+    `translate(-50%, -50%) scale(${scale})`;
+}
+
+window.addEventListener("resize", scaleGame);
+window.addEventListener("load", scaleGame);
+function goFullscreen() {
+  const elem = document.documentElement;
+
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) {
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    elem.msRequestFullscreen();
+  }
+}
+document.addEventListener("click", () => {
+  goFullscreen();
+}, { once: true });
+
 
 // ================= START =================
 buildGrid();
